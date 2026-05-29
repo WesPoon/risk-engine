@@ -56,25 +56,26 @@ public class BlackScholesPricer implements Pricer {
     //  Numerics
     // ------------------------------------------------------------------ //
 
-    /** Approximate implied vol via Newton-Raphson (max 50 iterations). */
+    /**
+     * Closed-form implied vol approximation — no external market price required.
+     *
+     * Uses a flat base vol of 20 % plus a vol-smile proxy that adds 5 % per
+     * 10 % of log-moneyness away from ATM (mimics a simplified skew surface):
+     *
+     *   σ = 0.20 + 0.50 · |ln(S/K)|
+     *
+     * For ATM options (S≈K) this gives σ ≈ 0.20 (20 %).
+     * For deep OTM/ITM it rises smoothly, keeping all Greeks well-defined.
+     *
+     * The previous Newton-Raphson approach was unstable because the heuristic
+     * objective  callPrice = 0.4·σ·S·√T  has no reliable fixed point for
+     * non-ATM inputs, causing sigma to collapse to the minimum clamp.
+     */
     private static double impliedVol(double S, double K, double T, double r) {
-        double sigma = 0.20; // initial guess
-        for (int i = 0; i < 50; i++) {
-            double sqrtT = Math.sqrt(T);
-            double d1 = (Math.log(S / K) + (r + 0.5 * sigma * sigma) * T) / (sigma * sqrtT);
-            double d2 = d1 - sigma * sqrtT;
-            double callPrice = S * normCdf(d1) - K * Math.exp(-r * T) * normCdf(d2);
-            // vega w.r.t. sigma
-            double vega = S * normPdf(d1) * sqrtT;
-            if (Math.abs(vega) < 1e-10) break;
-            // Simple market price target: use mid ATM rule σ·S·√T≈price
-            double targetPrice = 0.4 * sigma * S * sqrtT;
-            double diff = callPrice - targetPrice;
-            sigma -= diff / vega;
-            if (sigma < 1e-6) sigma = 1e-6;
-            if (Math.abs(diff) < 1e-8) break;
-        }
-        return sigma;
+        double moneyness = Math.abs(Math.log(S / K));
+        double sigma     = 0.20 + 0.50 * moneyness;
+        // Cap at a realistic maximum; floor at 1 %
+        return Math.max(0.01, Math.min(3.0, sigma));
     }
 
     /** Standard normal PDF. */

@@ -1,0 +1,26 @@
+# Maven build output
+target/
+
+# IDE files
+.idea/
+*.iml
+*.iws
+*.ipr
+.classpath
+.project
+.settings/
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs and heap dumps
+logs/
+*.log
+*.hprof
+
+# Credentials — never commit these
+*.env
+*.pem
+*.key

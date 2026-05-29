@@ -1,0 +1,62 @@
+{
+  "family": "risk-engine-task",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "512",
+  "memory": "1024",
+  "executionRoleArn": "arn:aws:iam::YOUR_ACCOUNT_ID:role/ecsTaskExecutionRole",
+  "taskRoleArn":      "arn:aws:iam::YOUR_ACCOUNT_ID:role/ecsTaskRole",
+  "containerDefinitions": [
+    {
+      "name": "risk-engine",
+      "image": "YOUR_ACCOUNT_ID.dkr.ecr.eu-west-1.amazonaws.com/risk-engine:latest",
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 8080,
+          "protocol": "tcp"
+        }
+      ],
+      "environment": [
+        { "name": "AWS_REGION", "value": "eu-west-1" }
+      ],
+      "secrets": [
+        {
+          "name": "DB_URL",
+          "valueFrom": "arn:aws:secretsmanager:eu-west-1:YOUR_ACCOUNT_ID:secret:risk-engine/db-url"
+        },
+        {
+          "name": "DB_USERNAME",
+          "valueFrom": "arn:aws:secretsmanager:eu-west-1:YOUR_ACCOUNT_ID:secret:risk-engine/db-username"
+        },
+        {
+          "name": "DB_PASSWORD",
+          "valueFrom": "arn:aws:secretsmanager:eu-west-1:YOUR_ACCOUNT_ID:secret:risk-engine/db-password"
+        },
+        {
+          "name": "SMTP_PASSWORD",
+          "valueFrom": "arn:aws:secretsmanager:eu-west-1:YOUR_ACCOUNT_ID:secret:risk-engine/smtp-password"
+        },
+        {
+          "name": "SYMPHONY_API_KEY",
+          "valueFrom": "arn:aws:secretsmanager:eu-west-1:YOUR_ACCOUNT_ID:secret:risk-engine/symphony-api-key"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/risk-engine",
+          "awslogs-region": "eu-west-1",
+          "awslogs-stream-prefix": "ecs"
+        }
+      },
+      "healthCheck": {
+        "command": ["CMD-SHELL", "wget -qO- http://localhost:8080/health || exit 1"],
+        "interval": 30,
+        "timeout": 5,
+        "retries": 3,
+        "startPeriod": 60
+      }
+    }
+  ]
+}

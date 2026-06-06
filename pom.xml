@@ -73,6 +73,13 @@
       <version>1.5.6</version>
     </dependency>
 
+    <!-- EJML – DMatrixRMaj for VaR covariance / Cholesky decomposition -->
+    <dependency>
+      <groupId>org.ejml</groupId>
+      <artifactId>ejml-all</artifactId>
+      <version>0.43.1</version>
+    </dependency>
+
     <!-- JUnit 5 for tests -->
     <dependency>
       <groupId>org.junit.jupiter</groupId>

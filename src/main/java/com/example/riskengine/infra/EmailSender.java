@@ -2,6 +2,10 @@ package com.example.riskengine.infra;
 
 import com.example.riskengine.AlertSender;
 import com.example.riskengine.model.Alert;
+
+import java.util.Queue;
+import java.util.concurrent.LinkedBlockingDeque;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

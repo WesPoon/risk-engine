@@ -4,12 +4,12 @@
   "requiresCompatibilities": ["FARGATE"],
   "cpu": "512",
   "memory": "1024",
-  "executionRoleArn": "arn:aws:iam::YOUR_ACCOUNT_ID:role/ecsTaskExecutionRole",
-  "taskRoleArn":      "arn:aws:iam::YOUR_ACCOUNT_ID:role/ecsTaskRole",
+  "executionRoleArn": "arn:aws:iam::590183689995:role/ecsTaskExecutionRole",
+  "taskRoleArn":      "arn:aws:iam::590183689995:role/ecsTaskRole",
   "containerDefinitions": [
     {
       "name": "risk-engine",
-      "image": "YOUR_ACCOUNT_ID.dkr.ecr.ap-southeast-2.amazonaws.com/risk-engine:latest",
+      "image": "590183689995.dkr.ecr.ap-southeast-2.amazonaws.com/risk-engine:latest",
       "essential": true,
       "portMappings": [
         {
@@ -23,23 +23,23 @@
       "secrets": [
         {
           "name": "DB_URL",
-          "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:YOUR_ACCOUNT_ID:secret:risk-engine/db-url"
+          "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:590183689995:secret:risk-engine/db-url"
         },
         {
           "name": "DB_USERNAME",
-          "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:YOUR_ACCOUNT_ID:secret:risk-engine/db-username"
+          "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:590183689995:secret:risk-engine/db-username"
         },
         {
           "name": "DB_PASSWORD",
-          "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:YOUR_ACCOUNT_ID:secret:risk-engine/db-password"
+          "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:590183689995:secret:risk-engine/db-password"
         },
         {
           "name": "SMTP_PASSWORD",
-          "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:YOUR_ACCOUNT_ID:secret:risk-engine/smtp-password"
+          "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:590183689995:secret:risk-engine/smtp-password"
         },
         {
           "name": "SYMPHONY_API_KEY",
-          "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:YOUR_ACCOUNT_ID:secret:risk-engine/symphony-api-key"
+          "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:590183689995:secret:risk-engine/symphony-api-key"
         }
       ],
       "logConfiguration": {

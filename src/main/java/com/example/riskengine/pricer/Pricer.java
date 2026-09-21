@@ -1,4 +1,4 @@
-package com.example.riskengine;
+package com.example.riskengine.pricer;
 
 import com.example.riskengine.model.RiskAttributes;
 import com.example.riskengine.model.Trade;

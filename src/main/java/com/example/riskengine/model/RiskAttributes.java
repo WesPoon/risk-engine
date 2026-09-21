@@ -9,5 +9,6 @@ public record RiskAttributes(
         double delta,
         double gamma,
         double vega,
-        double theta
+        double theta,
+        double vanna
 ) {}

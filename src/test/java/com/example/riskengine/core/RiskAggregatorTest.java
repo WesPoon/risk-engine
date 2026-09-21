@@ -33,7 +33,7 @@ class RiskAggregatorTest {
     private static Trade trade(String id, String portfolio,
                                 String gics, String country,
                                 double qty, String side) {
-        Trade t = new Trade(id, "TEST", portfolio, gics, country,
+        Trade t = new EquityTrade(id, "TEST", portfolio, gics, country,
                             qty, side, 100.0, 1.0);
         t.setSpot(100.0);
         t.setRiskFreeRate(0.05);
@@ -43,7 +43,7 @@ class RiskAggregatorTest {
     /** Build a RiskAttributes record with explicit values (qty already baked in). */
     private static RiskAttributes ra(String id, double delta, double gamma,
                                       double vega, double theta) {
-        return new RiskAttributes(id, 0.20, delta, gamma, vega, theta);
+        return new RiskAttributes(id, 0.20, delta, gamma, vega, theta, 0.0);
     }
 
     // ================================================================== //

@@ -1,6 +1,8 @@
-package com.example.riskengine.infra;
+package com.example.riskengine.pricer;
 
+import com.example.riskengine.model.EquityTrade;
 import com.example.riskengine.model.Trade;
+
 import org.ejml.data.DMatrixRMaj;
 import org.ejml.dense.row.decomposition.chol.CholeskyDecompositionCommon_DDRM;
 import org.ejml.dense.row.factory.DecompositionFactory_DDRM;
@@ -262,6 +264,7 @@ public class VaRPricer {
         double pos  = p * (sorted.length - 1);
         int    lo   = (int) pos;
         double frac = pos - lo;
+        // return lower rank and upper rank interpolation
         return sorted[lo] * (1 - frac) + sorted[lo + 1] * frac;
     }
 
@@ -298,19 +301,19 @@ public class VaRPricer {
         // Build a small portfolio: 3 underliers, 5 trades
         List<Trade> trades = new ArrayList<>();
 
-        Trade t1 = new Trade("T1", "AAPL", "EQUITIES", "TECH", "US", 100, "BUY", 170.0, 0.5);
+        Trade t1 = new EquityTrade("T1", "AAPL", "EQUITIES", "TECH", "US", 100, "BUY", 170.0, 0.5);
         t1.setSpot(180.0); t1.setRiskFreeRate(0.05);
 
-        Trade t2 = new Trade("T2", "AAPL", "EQUITIES", "TECH", "US", 50, "SELL", 175.0, 0.25);
+        Trade t2 = new EquityTrade("T2", "AAPL", "EQUITIES", "TECH", "US", 50, "SELL", 175.0, 0.25);
         t2.setSpot(180.0); t2.setRiskFreeRate(0.05);
 
-        Trade t3 = new Trade("T3", "MSFT", "EQUITIES", "TECH", "US", 200, "BUY", 400.0, 1.0);
+        Trade t3 = new EquityTrade("T3", "MSFT", "EQUITIES", "TECH", "US", 200, "BUY", 400.0, 1.0);
         t3.setSpot(410.0); t3.setRiskFreeRate(0.05);
 
-        Trade t4 = new Trade("T4", "GOOG", "EQUITIES", "TECH", "US", 75, "BUY", 155.0, 0.75);
+        Trade t4 = new EquityTrade("T4", "GOOG", "EQUITIES", "TECH", "US", 75, "BUY", 155.0, 0.75);
         t4.setSpot(160.0); t4.setRiskFreeRate(0.05);
 
-        Trade t5 = new Trade("T5", "GOOG", "EQUITIES", "TECH", "US", 30, "SELL", 165.0, 0.5);
+        Trade t5 = new EquityTrade("T5", "GOOG", "EQUITIES", "TECH", "US", 30, "SELL", 165.0, 0.5);
         t5.setSpot(160.0); t5.setRiskFreeRate(0.05);
 
         trades.addAll(List.of(t1, t2, t3, t4, t5));

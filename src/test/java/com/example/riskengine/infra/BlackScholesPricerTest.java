@@ -1,7 +1,10 @@
 package com.example.riskengine.infra;
 
+import com.example.riskengine.model.EquityTrade;
 import com.example.riskengine.model.RiskAttributes;
 import com.example.riskengine.model.Trade;
+import com.example.riskengine.pricer.BlackScholesPricer;
+
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -32,7 +35,7 @@ class BlackScholesPricerTest {
     // ------------------------------------------------------------------ //
     private static Trade trade(String id, double S, double K, double T,
                                 double r, String side, double qty) {
-        Trade t = new Trade(id, "TEST", "BOOK", "99", "US",
+        Trade t = new EquityTrade(id, "TEST", "BOOK", "99", "US",
                             qty, side, K, T);
         t.setSpot(S);
         t.setRiskFreeRate(r);

@@ -2,8 +2,9 @@ package com.example.riskengine.model;
 
 /**
  * Enriched trade record stored in Redis after initial position update.
+ * Concrete asset-class trades (EquityTrade, CreditTrade, ...) extend this.
  */
-public class Trade {
+public abstract class Trade {
     private final String tradeId;
     private final String underlier;
     private final String portfolio;
@@ -17,7 +18,7 @@ public class Trade {
     private volatile double spot;
     private volatile double riskFreeRate;
 
-    public Trade(String tradeId, String underlier, String portfolio,
+    protected Trade(String tradeId, String underlier, String portfolio,
                  String gics, String country,
                  double quantity, String side,
                  double strikePrice, double maturityYears) {

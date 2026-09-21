@@ -3,6 +3,8 @@ package com.example.riskengine.core;
 import com.example.riskengine.*;
 import com.example.riskengine.infra.H2RiskRepository;
 import com.example.riskengine.model.*;
+import com.example.riskengine.pricer.Pricer;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -113,7 +115,7 @@ public class RiskEngine implements RiskObserver {
             // Derive enrichment data – in production this would query a reference-data service
             String gics    = deriveGics(pu.underlier());
             String country = deriveCountry(pu.underlier());
-            Trade t = new Trade(pu.tradeId(), pu.underlier(), pu.portfolio(),
+            Trade t = new EquityTrade(pu.tradeId(), pu.underlier(), pu.portfolio(),
                                 gics, country,
                                 pu.quantity(), pu.side(),
                                 pu.strikePrice(), pu.maturityYears());

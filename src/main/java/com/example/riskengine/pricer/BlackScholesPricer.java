@@ -1,6 +1,5 @@
-package com.example.riskengine.infra;
+package com.example.riskengine.pricer;
 
-import com.example.riskengine.Pricer;
 import com.example.riskengine.model.RiskAttributes;
 import com.example.riskengine.model.Trade;
 
@@ -28,7 +27,7 @@ public class BlackScholesPricer implements Pricer {
         double r = trade.getRiskFreeRate();
 
         if (S <= 0 || K <= 0 || T <= 0) {
-            return new RiskAttributes(trade.getTradeId(), 0, 0, 0, 0, 0);
+            return new RiskAttributes(trade.getTradeId(), 0, 0, 0, 0, 0, 0);
         }
 
         double sigma = impliedVol(S, K, T, r);
@@ -49,7 +48,8 @@ public class BlackScholesPricer implements Pricer {
                 delta * qty,
                 gamma * qty,
                 vega  * qty,
-                theta * qty);
+                theta * qty,
+                0.0);   // vanna — not computed
     }
 
     // ------------------------------------------------------------------ //

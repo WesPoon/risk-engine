@@ -94,7 +94,7 @@ on:
     branches: [main]
 
 env:
-  AWS_REGION: eu-west-1
+  AWS_REGION: ap-southeast-2
   ECR_REPOSITORY: risk-engine
   ECS_CLUSTER: risk-engine-cluster
   ECS_SERVICE: risk-engine-service
